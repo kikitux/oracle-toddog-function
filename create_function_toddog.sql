@@ -5,48 +5,48 @@ show err
 
 prompt create function f_metrictoddog
 CREATE OR REPLACE FUNCTION f_metrictoddog ( 
-   name IN VARCHAR2,
-   metric IN BINARY_INTEGER,
-   kind IN VARCHAR2,
-   tag IN VARCHAR2)  
+  name IN VARCHAR2,
+  metric IN BINARY_INTEGER,
+  kind IN VARCHAR2,
+  tag IN VARCHAR2)  
 RETURN VARCHAR2 AS LANGUAGE C 
 NAME "metrictoddog" 
 LIBRARY libtoddog
 WITH CONTEXT 
 PARAMETERS ( 
-CONTEXT,  
-name   	STRING,  
-name   	INDICATOR short,  
-metric	INT,  
-metric	INDICATOR short,  
-kind	STRING,  
-kind	INDICATOR short,  
-tag	STRING,  
-tag	INDICATOR short,  
-RETURN INDICATOR short,  
-RETURN LENGTH short,  
-RETURN STRING); 
+  CONTEXT,  
+  name    STRING,  
+  name    INDICATOR short,  
+  metric  INT,  
+  metric	INDICATOR short,  
+  kind    STRING,  
+  kind    INDICATOR short,  
+  tag     STRING,  
+  tag     INDICATOR short,  
+  RETURN  INDICATOR short,  
+  RETURN  LENGTH short,  
+  RETURN  STRING); 
 /
 show err
 
 CREATE OR REPLACE FUNCTION f_gaugetoddog(
-    name IN VARCHAR2,
-    metric IN number,
-    tag IN VARCHAR2)
+  name IN VARCHAR2,
+  metric IN number,
+  tag IN VARCHAR2)
 RETURN VARCHAR2 IS
 BEGIN
-    return f_metrictoddog(name,metric,'g',tag); 
+  return f_metrictoddog(name,metric,'g',tag);
 END;
 /
 show err
 
 CREATE OR REPLACE FUNCTION f_counttoddog(
-    name IN VARCHAR2,
-    metric IN number,
-    tag IN VARCHAR2)
+  name IN VARCHAR2,
+  metric IN number,
+  tag IN VARCHAR2)
 RETURN VARCHAR2 IS
 BEGIN
-    return f_metrictoddog(name,metric,'c',tag);
+  return f_metrictoddog(name,metric,'c',tag);
 END;
 /
 show err
@@ -97,6 +97,5 @@ EXCEPTION
 END;
 /
 show err
-
 
 exit
