@@ -6,6 +6,7 @@ before_install:
 - bash scripts/prebuild.sh
 script:
 - docker run --rm -v $PWD/src:/project database-instantclient
+- find . -name libtoddog.so -ls
 deploy:
   provider: releases
   api_key:
