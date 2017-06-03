@@ -8,4 +8,5 @@ cd /project/build
 cmake ..
 make clean
 make
-cp libtoddog.so /project/release
+mkdir -p src/project/release
+cp libtoddog.so /project/release/
