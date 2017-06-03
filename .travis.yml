@@ -1,12 +1,15 @@
 sudo: required
-
 language: c
-
 services:
-  - docker
-
+- docker
 before_install:
-  - bash scripts/prebuild.sh
-
+- bash scripts/prebuild.sh
 script:
-  - docker run --rm -v $PWD/src:/project database-instantclient
+- docker run --rm -v $PWD/src:/project database-instantclient
+deploy:
+  provider: releases
+  api_key:
+    secure: IXV2oH+Cl8R5HMTsqzvXxGbC8g4z5zDB9rlUO4YZoun7JtmsITm7iz73rrovrb//RUJFfSNkvKwv7bSPHzTphFxdrWIK3KF1A4A5R8kXx14UwB4dRHVMBpEYyV5iCgI0DFLVp8Nrd+YdLWRlcDdIWe26az+wf/wsOqY2KPFPRpMQQwoVhQRdcBUnrRt3I3BSpGtvoasJOmAuQC3TFVTUgdFuC8/KHvQkQEcnavMWr2fP5ZVa02jTjpzSUx4QWE1VJWOkzzYyun/OmrUwE5Wyo9AzWxAZqs739fPZ9K4SjJoMu5lgKeOkVnI4uzguj5tqYKmtxRCkxXXWMSGrIsuSYQtiLj/VYgMdlPzFPQRIwfmmQzXJm/z37++nfdob9qfN6/9rYNmlP6y58PQS1vwXtvRNcichu0YnjsM6VZiW5aXAT0+n5oBLKhgxWBoXECF9RVo591FIHty4/pvia8m0cay2LHSdgd9KUVsF3axG0SX8IM/MjtsME4iGtB2FimGleJnaL3I7h4JlwkY/nUxciAucWS0E/bOG3X/K4SHVovriI6+FZ3KkbdQacmv0KHtW1qgKIm1Oz+/xMxPNoGT24XlQRDdi5b0NUpnfZN63JmgpQtRpxK/wepss4PIIoOiH+ES4bwRs6wO23a8P5ALhpxJbp6QZgJl96T4Qg0FQAw0=
+  file: src/build/libtoddog.so
+  on:
+    repo: kikitux/oracle-toddog-function
