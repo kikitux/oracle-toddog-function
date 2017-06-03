@@ -5,4 +5,4 @@ set(CMAKE_C_STANDARD 11)
 
 #include_directories(sdk/include)
 set(SOURCE_FILES toddog.c)
-add_library(concat SHARED ${SOURCE_FILES})
+add_library(toddog SHARED ${SOURCE_FILES})
