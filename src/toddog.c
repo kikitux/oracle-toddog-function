@@ -2,7 +2,7 @@
 #include "toddog_udp.h"
 
 // to send a metric to ddog
-char *metrictoDdog(
+char *metrictoddog(
         OCIExtProcContext *ctx,
         char   *name,	 // pointer to name -- name of the metric
         short  name_i,	 // null status of name
