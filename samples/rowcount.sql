@@ -5,14 +5,16 @@ declare
   tag varchar2(50);
   result varchar2(10);
   cursor c_table is
-    select TABLE_NAME, NUM_ROWS from all_tables where OWNER = 'HR';
+    select TABLE_NAME, NUM_ROWS, OWNER
+      from all_tables where OWNER = 'HR';
   errorinloop EXCEPTION;
   err_num NUMBER;
   err_msg VARCHAR2(100);
 begin
   name := 'sample.rowcount';
   for t in c_table loop
-    tag := concat('schema:hr,table_name:',t.table_name);
+    tag := 'table_name:' || t.table_name || ',schema:' || t.owner;
+    dbms_output.put_line(name || ':' || t.num_rows || ',' || tag);
     result := f_gaugetoddog(name,t.num_rows,tag);
     IF result != 'done' THEN
       RAISE errorinloop;

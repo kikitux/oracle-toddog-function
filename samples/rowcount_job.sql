@@ -5,14 +5,15 @@ CREATE OR REPLACE PROCEDURE proc_rowcount_toddog AS
   result varchar2(10);
   tag varchar2(50);
   cursor c_table is
-    select TABLE_NAME, NUM_ROWS from all_tables where OWNER = 'HR';
+    select TABLE_NAME, NUM_ROWS, OWNER
+      from all_tables where OWNER = 'HR';
   errorinloop EXCEPTION;
   err_num NUMBER;
   err_msg VARCHAR2(100);
 begin
   name := 'sample.rowcount';
   for t in c_table loop
-    tag := concat('schema:hr,table_name:',t.table_name);
+    tag := 'table_name:' || t.table_name || ',schema:' || t.owner;
     result := f_gaugetoddog(name,t.num_rows,tag);
     IF result != 'done' THEN
       RAISE errorinloop;
@@ -20,22 +21,20 @@ begin
   end loop;
 EXCEPTION
   WHEN errorinloop THEN
-    raise_application_error(-20101, 'error inside loop on samples/rowcount.sql');
+    raise_application_error(-20101, 'error inside loop on samples/rowcount_job.sql');
   WHEN OTHERS THEN
     err_num := SQLCODE;
     err_msg := SUBSTR(SQLERRM, 1, 100);
     raise_application_error(err_num, err_msg);
 END;
 /
-
 show err
 
 begin
 proc_rowcount_toddog;
 end;
 /
-
-
+show err
 
 declare
    job_doesnt_exist EXCEPTION;
@@ -60,6 +59,7 @@ DBMS_SCHEDULER.create_job (
   comments        => 'Job defined entirely by the CREATE JOB procedure.');
 END;
 /
+show err
 
 prompt check if job enabled
 SELECT ENABLED as E FROM DBA_SCHEDULER_JOBS where JOB_NAME = UPPER('job_rowcount_toddog');
