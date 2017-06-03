@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 mkdir -p /usr/share/info/dir
-yum install -y --setopt=tsflags='nodocs' gcc make which tar unzip gzip
+yum install -y --setopt=tsflags='nodocs' gcc gcc-c++ make which tar unzip gzip
 yum clean all
 
 which cmake 2>/dev/null || {
