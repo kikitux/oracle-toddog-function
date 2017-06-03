@@ -2,6 +2,7 @@ set serveroutput on
 
 declare
   name varchar2(50);
+  tag varchar2(50);
   result varchar2(10);
   cursor c_table is
     select TABLE_NAME, NUM_ROWS from all_tables where OWNER = 'HR';
@@ -11,7 +12,8 @@ declare
 begin
   name := 'sample.rowcount';
   for t in c_table loop
-    result := f_gaugetoddog(name,t.num_rows,t.table_name);
+    tag := concat('schema:hr,table_name:',t.table_name);
+    result := f_gaugetoddog(name,t.num_rows,tag);
     IF result != 'done' THEN
       RAISE errorinloop;
    END IF;

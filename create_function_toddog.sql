@@ -64,7 +64,7 @@ declare
 begin
   name := 'sample.gauge';
   metric := 15;
-  tag := 'plsql';
+  tag := 'source:plsql';
   result := f_gaugetoddog(name,metric,tag);
   dbms_output.put_line(result);
 EXCEPTION
@@ -86,7 +86,7 @@ declare
 begin
   name := 'sample.count';
   metric := 15;
-  tag := 'plsql';
+  tag := 'source:plsql';
   result := f_counttoddog(name,metric,tag);
   dbms_output.put_line(result);
 EXCEPTION

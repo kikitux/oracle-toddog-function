@@ -50,12 +50,12 @@ char *metrictoddog(
 
     if (tag_i == OCI_IND_NULL)
     {
-      asprintf(&themetric,"%s:%d|%s|#tag:notag",metricname, metric, thekind);
+      asprintf(&themetric,"%s:%d|%s|",metricname, metric, thekind);
     }
 
     if  (tag_i == OCI_IND_NOTNULL)
     {
-      asprintf(&themetric,"%s:%d|%s|#tag:%s",metricname, metric, thekind,tag);
+      asprintf(&themetric,"%s:%d|%s|#%s",metricname, metric, thekind,tag);
     }
 
     udp(8125, themetric);
