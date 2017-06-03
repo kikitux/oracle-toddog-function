@@ -6,4 +6,6 @@ fi
 
 cd /project/build
 cmake ..
+make clean
 make
+cp libtoddog.so /project/release
