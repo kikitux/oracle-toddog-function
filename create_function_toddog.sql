@@ -1,9 +1,9 @@
 prompt create library using libtoddog.so
-
 CREATE OR REPLACE LIBRARY libtoddog AS  '${ORACLE_HOME}/lib/libtoddog.so';
 /
-prompt create function f_metrictoddog
+show err
 
+prompt create function f_metrictoddog
 CREATE OR REPLACE FUNCTION f_metrictoddog ( 
    name IN VARCHAR2,
    metric IN BINARY_INTEGER,

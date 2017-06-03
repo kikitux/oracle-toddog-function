@@ -25,7 +25,6 @@ EXCEPTION
     raise_application_error(err_num, err_msg);
 END;
 /
-
 show err
 
 exit
