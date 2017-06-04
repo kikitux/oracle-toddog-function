@@ -14,12 +14,12 @@ begin
   for t in c_table loop
     result := t.c;
     if result<2 then
-      event_rmsg := f_eventtoddog('sample event','sample: error counting sysdate, expected 2 or more','sample');
       RAISE errorsysdate;
     end if;
   end loop;
 EXCEPTION
   WHEN errorsysdate THEN
+    event_rmsg := f_eventtoddog('sample event','sample: error counting sysdate, expected 2 or more','sample');
     raise_application_error(-20101, 'error counting from sysdate, event to ddog:' || event_rmsg);
   WHEN OTHERS THEN
     err_num := SQLCODE;
