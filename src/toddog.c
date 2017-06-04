@@ -19,10 +19,9 @@ char *metrictoddog(
   char *tmp;
   short len;
   char* themetric;  // to store the metric we will send to datadog
-  char* thekind;    // to store the kind we will send to datadog
 
   // Check for null inputs
-  if (name_i == OCI_IND_NULL)
+  if ( (name_i == OCI_IND_NULL) || (metric_i == OCI_IND_NULL) || (kind_i == OCI_IND_NULL) )
   {
     *ret_i = (short)OCI_IND_NULL;
 
@@ -34,21 +33,7 @@ char *metrictoddog(
   }
 
   // the main part 
-
-  if  (kind_i == OCI_IND_NOTNULL)
-  {
-    asprintf(&thekind,"%s",kind);
-  } else {
-    asprintf(&thekind,"%s","g");  // no kind, we default to gauge
-  }
-
-  if  (tag_i == OCI_IND_NOTNULL)
-  {
-    asprintf(&themetric,"%s:%d|%s|#%s",name, metric, thekind,tag);
-  } else {
-    asprintf(&themetric,"%s:%d|%s|",name, metric, thekind);
-  }
-
+  asprintf(&themetric,"%s:%d|%s|#%s",name, metric, kind,tag);
   udp(8125, themetric);         // we fire the metric to datadog
 
   // the reply part
@@ -102,7 +87,6 @@ char *eventtoddog(
   // the main part 
 
   asprintf(&theevent,"_e{%d,%d}:%s|%s|#%s",strlen(title),strlen(text),title,text,tag);
-
   udp(8125, theevent);
 
   // the reply part
