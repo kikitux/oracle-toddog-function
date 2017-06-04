@@ -5,10 +5,10 @@ show err
 
 prompt create function f_metrictoddog
 CREATE OR REPLACE FUNCTION f_metrictoddog ( 
-  name IN VARCHAR2,
+  name   IN VARCHAR2,
   metric IN BINARY_INTEGER,
-  kind IN VARCHAR2,
-  tag IN VARCHAR2)  
+  kind   IN VARCHAR2,
+  tag    IN VARCHAR2)  
 RETURN VARCHAR2 AS LANGUAGE C 
 NAME "metrictoddog" 
 LIBRARY libtoddog
@@ -21,6 +21,29 @@ PARAMETERS (
   metric	INDICATOR short,  
   kind    STRING,  
   kind    INDICATOR short,  
+  tag     STRING,  
+  tag     INDICATOR short,  
+  RETURN  INDICATOR short,  
+  RETURN  LENGTH short,  
+  RETURN  STRING); 
+/
+show err
+
+prompt create function f_eventtoddog
+CREATE OR REPLACE FUNCTION f_eventtoddog ( 
+  title IN VARCHAR2,
+  text  IN VARCHAR2,
+  tag   IN VARCHAR2)  
+RETURN VARCHAR2 AS LANGUAGE C 
+NAME "eventtoddog" 
+LIBRARY libtoddog
+WITH CONTEXT 
+PARAMETERS ( 
+  CONTEXT,  
+  title   STRING,  
+  title   INDICATOR short,  
+  text    STRING,  
+  text 	  INDICATOR short,  
   tag     STRING,  
   tag     INDICATOR short,  
   RETURN  INDICATOR short,  
@@ -88,6 +111,28 @@ begin
   metric := 15;
   tag := 'source:plsql';
   result := f_counttoddog(name,metric,tag);
+  dbms_output.put_line(result);
+  EXCEPTION
+    WHEN OTHERS THEN
+      err_num := SQLCODE;
+      err_msg := SUBSTR(SQLERRM, 1, 100);
+      raise_application_error(err_num, err_msg);
+END;
+/
+show err
+
+declare
+  title varchar2(50);
+  text varchar2(50);
+  tag varchar2(50);
+  result varchar2(10);
+  err_num NUMBER;
+  err_msg VARCHAR2(100);
+begin
+  title := 'title of event';
+  text := 'text for event';
+  tag := 'source:plsql';
+  result := f_eventtoddog(title,text,tag);
   dbms_output.put_line(result);
 EXCEPTION
   WHEN OTHERS THEN
