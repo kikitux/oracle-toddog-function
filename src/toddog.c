@@ -85,7 +85,6 @@ char *eventtoddog(
   }
 
   // the main part 
-
   asprintf(&theevent,"_e{%d,%d}:%s|%s|#%s",strlen(title),strlen(text),title,text,tag);
   udp(8125, theevent);
 
