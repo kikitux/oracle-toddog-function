@@ -1,8 +1,8 @@
 set serveroutput on
 
 declare
-  name varchar2(50);
-  tag varchar2(50);
+  name varchar2(150);
+  tag varchar2(150);
   result varchar2(10);
   cursor c_table is
     select TABLE_NAME, NUM_ROWS, OWNER
