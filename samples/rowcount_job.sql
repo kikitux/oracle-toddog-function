@@ -1,9 +1,9 @@
 set serveroutput on 
 
 CREATE OR REPLACE PROCEDURE proc_rowcount_toddog AS
-  name varchar2(50);
+  name varchar2(150);
+  tag varchar2(150);
   result varchar2(10);
-  tag varchar2(50);
   cursor c_table is
     select TABLE_NAME, NUM_ROWS, OWNER
       from all_tables where OWNER = 'HR';
