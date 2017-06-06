@@ -81,10 +81,10 @@ GRANT EXECUTE ON f_eventtoddog TO public;
 GRANT EXECUTE ON f_gaugetoddog TO public;
 GRANT EXECUTE ON f_counttoddog TO public;
 
-CREATE OR REPLACE PUBLIC SYNONYM f_metrictoddog FOR SYS.f_gaugetoddog;
-CREATE OR REPLACE PUBLIC SYNONYM f_eventtoddog FOR SYS.f_gaugetoddog;
+CREATE OR REPLACE PUBLIC SYNONYM f_metrictoddog FOR SYS.f_metrictoddog;
+CREATE OR REPLACE PUBLIC SYNONYM f_eventtoddog FOR SYS.f_eventtoddog;
 CREATE OR REPLACE PUBLIC SYNONYM f_gaugetoddog FOR SYS.f_gaugetoddog;
-CREATE OR REPLACE PUBLIC SYNONYM f_counttoddog FOR SYS.f_gaugetoddog;
+CREATE OR REPLACE PUBLIC SYNONYM f_counttoddog FOR SYS.f_counttoddog;
 show err
 
 prompt calling function from pl/sql block
