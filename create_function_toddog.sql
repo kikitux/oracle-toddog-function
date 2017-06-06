@@ -100,7 +100,7 @@ declare
 begin
   name := 'sample.gauge';
   metric := 15;
-  tag := 'source:plsql';
+  tag := 'source:plsql' || ',dbname:' || sys_context('USERENV','DB_NAME');
   result := f_gaugetoddog(name,metric,tag);
   dbms_output.put_line(result);
 EXCEPTION
@@ -122,7 +122,7 @@ declare
 begin
   name := 'sample.count';
   metric := 15;
-  tag := 'source:plsql';
+  tag := 'source:plsql'|| ',dbname:' || sys_context('USERENV','DB_NAME');
   result := f_counttoddog(name,metric,tag);
   dbms_output.put_line(result);
   EXCEPTION
@@ -144,7 +144,7 @@ declare
 begin
   title := 'title of event';
   text := 'text for event';
-  tag := 'source:plsql';
+  tag := 'source:plsql' || ',dbname:' || sys_context('USERENV','DB_NAME');
   result := f_eventtoddog(title,text,tag);
   dbms_output.put_line(result);
 EXCEPTION
