@@ -14,7 +14,7 @@ begin
   name := 'sample.rowcount';
   for t in c_table loop
     tag := 'table_name:' || t.table_name || ',schema:' || t.owner || ',dbname:' || sys_context('USERENV','DB_NAME');
-    result := f_gaugetoddog(name,t.num_rows,tag);
+    result := gaugetoddog(name,t.num_rows,tag);
     IF result != 'done' THEN
       RAISE errorinloop;
    END IF;

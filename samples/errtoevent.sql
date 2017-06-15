@@ -19,7 +19,7 @@ begin
   end loop;
 EXCEPTION
   WHEN errorsysdate THEN
-    event_rmsg := f_eventtoddog('sample event','sample: error counting sysdate, expected 2 or more','sample');
+    event_rmsg := eventtoddog('sample event','sample: error counting sysdate, expected 2 or more','sample');
     raise_application_error(-20101, 'error counting from sysdate, event to ddog:' || event_rmsg);
   WHEN OTHERS THEN
     err_num := SQLCODE;

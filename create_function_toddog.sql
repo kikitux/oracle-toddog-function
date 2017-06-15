@@ -29,8 +29,8 @@ PARAMETERS (
 /
 show err
 
-prompt create function f_eventtoddog
-CREATE OR REPLACE FUNCTION f_eventtoddog ( 
+prompt create function eventtoddog
+CREATE OR REPLACE FUNCTION eventtoddog ( 
   title IN VARCHAR2,
   text  IN VARCHAR2,
   tag   IN VARCHAR2)  
@@ -52,39 +52,39 @@ PARAMETERS (
 /
 show err
 
-CREATE OR REPLACE FUNCTION f_gaugetoddog(
+CREATE OR REPLACE FUNCTION gaugetoddog(
   name IN VARCHAR2,
   metric IN number,
   tag IN VARCHAR2)
 RETURN VARCHAR2 IS
 BEGIN
-  return f_metrictoddog(name,metric,'g',tag);
+  return f_metrictoddog(name,metric,'g',tag || ',dbname:' || sys_context('USERENV','DB_NAME'));
 END;
 /
 show err
 
-CREATE OR REPLACE FUNCTION f_counttoddog(
+CREATE OR REPLACE FUNCTION counttoddog(
   name IN VARCHAR2,
   metric IN number,
   tag IN VARCHAR2)
 RETURN VARCHAR2 IS
 BEGIN
-  return f_metrictoddog(name,metric,'c',tag);
+  return f_metrictoddog(name,metric,'c',tag || ',dbname:' || sys_context('USERENV','DB_NAME'));
 END;
 /
 show err
 
 prompt grant access and create public synonym
 
+GRANT EXECUTE ON eventtoddog TO public;
 GRANT EXECUTE ON f_metrictoddog TO public;
-GRANT EXECUTE ON f_eventtoddog TO public;
-GRANT EXECUTE ON f_gaugetoddog TO public;
-GRANT EXECUTE ON f_counttoddog TO public;
+GRANT EXECUTE ON gaugetoddog TO public;
+GRANT EXECUTE ON counttoddog TO public;
 
+CREATE OR REPLACE PUBLIC SYNONYM eventtoddog FOR SYS.eventtoddog;
 CREATE OR REPLACE PUBLIC SYNONYM f_metrictoddog FOR SYS.f_metrictoddog;
-CREATE OR REPLACE PUBLIC SYNONYM f_eventtoddog FOR SYS.f_eventtoddog;
-CREATE OR REPLACE PUBLIC SYNONYM f_gaugetoddog FOR SYS.f_gaugetoddog;
-CREATE OR REPLACE PUBLIC SYNONYM f_counttoddog FOR SYS.f_counttoddog;
+CREATE OR REPLACE PUBLIC SYNONYM gaugetoddog FOR SYS.gaugetoddog;
+CREATE OR REPLACE PUBLIC SYNONYM counttoddog FOR SYS.counttoddog;
 show err
 
 prompt calling function from pl/sql block
@@ -100,8 +100,8 @@ declare
 begin
   name := 'sample.gauge';
   metric := 15;
-  tag := 'source:plsql' || ',dbname:' || sys_context('USERENV','DB_NAME');
-  result := f_gaugetoddog(name,metric,tag);
+  tag := 'source:plsql';
+  result := gaugetoddog(name,metric,tag);
   dbms_output.put_line(result);
 EXCEPTION
   WHEN OTHERS THEN
@@ -122,8 +122,8 @@ declare
 begin
   name := 'sample.count';
   metric := 15;
-  tag := 'source:plsql'|| ',dbname:' || sys_context('USERENV','DB_NAME');
-  result := f_counttoddog(name,metric,tag);
+  tag := 'source:plsql';
+  result := counttoddog(name,metric,tag);
   dbms_output.put_line(result);
   EXCEPTION
     WHEN OTHERS THEN
@@ -145,7 +145,7 @@ begin
   title := 'title of event';
   text := 'text for event';
   tag := 'source:plsql' || ',dbname:' || sys_context('USERENV','DB_NAME');
-  result := f_eventtoddog(title,text,tag);
+  result := eventtoddog(title,text,tag);
   dbms_output.put_line(result);
 EXCEPTION
   WHEN OTHERS THEN

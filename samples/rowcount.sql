@@ -15,7 +15,7 @@ begin
   for t in c_table loop
     tag := 'table_name:' || t.table_name || ',schema:' || t.owner || ',dbname:' || sys_context('USERENV','DB_NAME');
     dbms_output.put_line(name || ':' || t.num_rows || ',' || tag);
-    result := f_gaugetoddog(name,t.num_rows,tag);
+    result := gaugetoddog(name,t.num_rows,tag);
     IF result != 'done' THEN
       RAISE errorinloop;
    END IF;
