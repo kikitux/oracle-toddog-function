@@ -1,29 +1,3 @@
-prompt create function f_metrictoddog
-CREATE OR REPLACE FUNCTION f_metrictoddog ( 
-  name   IN VARCHAR2,
-  metric IN BINARY_INTEGER,
-  kind   IN VARCHAR2,
-  tag    IN VARCHAR2)  
-RETURN VARCHAR2 AS LANGUAGE C 
-NAME "metrictoddog" 
-LIBRARY libtoddog
-WITH CONTEXT 
-PARAMETERS ( 
-  CONTEXT,  
-  name    STRING,  
-  name    INDICATOR short,  
-  metric  INT,  
-  metric	INDICATOR short,  
-  kind    STRING,  
-  kind    INDICATOR short,  
-  tag     STRING,  
-  tag     INDICATOR short,  
-  RETURN  INDICATOR short,  
-  RETURN  LENGTH short,  
-  RETURN  STRING); 
-/
-show err
-
 prompt create function eventtoddog
 CREATE OR REPLACE FUNCTION eventtoddog ( 
   title IN VARCHAR2,
